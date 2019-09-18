@@ -11,8 +11,6 @@ import matplotlib.pyplot as plt
 import time
 start_time = time.time()
 
-# plt.rcParams['figure.figsize'] = [10, 5]
-
 # load the dataset
 df = pd.read_csv('amine2.csv')                          # Making the excel file a pandas dataframe
 df['Date'] = pd.to_datetime(df['Date'], dayfirst=True)
@@ -85,50 +83,6 @@ X_train = scaling.transform(X_train)
 X_test = scaling.transform(X_test)
 samples = X_train.shape[0]
 
-
-# The first Neural Network: Multi-Layer Perceptron
-mlp = MLPRegressor(hidden_layer_sizes=(100,), max_iter=1500)
-mlp.fit(X_train, y_train)                                       # Fitting the model
-
-pred_train = mlp.predict(X_train)
-pred_test = mlp.predict(X_test)
-r2_train = r2_score(y_train, pred_train)                        # Getting scores for how good the model is fitted
-r2_test = r2_score(y_test, pred_test)
-print('R2 score train:', r2_train)
-print('R2 score test:', r2_test)
-print('MSE:', mean_squared_error(y_test, pred_test))
-
-# To plot the predictions on the correct timeline, it has to be converted to the same format as the
-# rest of the dataframe. Combining predicted training and testing to get the correct amount of data points:
-trained = pred_train
-predicted = pred_test
-total = np.concatenate((trained, predicted), axis=0)    # Combining the predicted training and testing to 1 series
-df['pred'] = total                                  # Making the predictions a column in the dataframe
-
-
-# Plotting was difficult in this case. To get good plots, you need to specify when the training set in the dataframe is
-# done, and changing color for the test predictions. This is not a very pythonic way of doing things and I would like
-# to change that, but haven't found a sufficient solution.
-plt.plot(df['KjolevannU'], color='blue', label='U Value')       # Plotting the "reference values" -  the label.
-plt.plot(df['pred'][:samples], 'r-', label='Training')     # samples must be changed from 112261 to plot the reduced dataset
-plt.plot(df['pred'][samples:], 'g-', label='Predicted')
-plt.xlabel('Time')
-plt.ylabel('U-value')
-plt.legend(loc=1)
-plt.title('Neural Network - MLP')
-plt.show()
-plt.plot(df['KjolevannU'][samples:], color='blue', label='U Value')  # Making another plot that only contains test parts
-plt.plot(df['pred'][samples:], 'g-', label='Predicted', alpha=0.7)
-plt.xlabel('Time')
-plt.ylabel('U-value')
-plt.legend(loc=1)
-plt.title('Predicted values for MLP')
-plt.show()
-
-df = df.drop('pred', 1)         # Dropping the pred, making a new one in the Sequential model, don't think this is
-# necessary as the "pred" column should be overwritten next time it is made
-
-
 # 2nd Neural Network - Keras Sequential Model
 # To play with different settings: Optimizer, no. epochs and no. batch_size can be changed to you liking
 model = Sequential()
@@ -138,7 +92,7 @@ model.add(Dense(1, activation='relu'))
 # compile the keras model
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_squared_error'])
 # fit the keras model on the dataset
-model.fit(X_train, y_train, epochs=100, batch_size=10, verbose=1)      # verbose = 1 if you want to inspect every epoch
+model.fit(X_train, y_train, epochs=15, batch_size=10, verbose=1)      # verbose = 1 if you want to inspect every epoch
 
 # evaluate the keras model
 pred_train = model.predict(X_train)
