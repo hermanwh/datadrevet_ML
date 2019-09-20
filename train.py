@@ -6,10 +6,14 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
+import tensorflowjs as tfjs
+import tensorflow as tf
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
 start_time = time.time()
+
+tf.compat.v1.disable_eager_execution()
 
 # load the dataset
 df = pd.read_csv('amine2.csv')                          # Making the excel file a pandas dataframe
@@ -92,50 +96,9 @@ model.add(Dense(1, activation='relu'))
 # compile the keras model
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_squared_error'])
 # fit the keras model on the dataset
-model.fit(X_train, y_train, epochs=15, batch_size=10, verbose=1)      # verbose = 1 if you want to inspect every epoch
-
-# evaluate the keras model
-pred_train = model.predict(X_train)
-pred_test = model.predict(X_test)
-r2_train = r2_score(y_train, pred_train)
-r2_test = r2_score(y_test, pred_test)
-print('R2 score train:', r2_train)
-print('R2 score test:', r2_test)
-
-# Same procedure as with the MLP for plotting
-trained = pred_train
-predicted = pred_test
-total = np.concatenate((trained, predicted), axis=0)
-df['pred'] = total
+model.fit(X_train, y_train, epochs=3, batch_size=10, verbose=1)      # verbose = 1 if you want to inspect every epoch
 
 
-plt.plot(df['KjolevannU'], color='blue', label='U Value')
-plt.plot(df['pred'][:samples], 'r-', label='Training')
-plt.plot(df['pred'][samples:], 'g-', label='Predicted')
-plt.xlabel('Time')
-plt.ylabel('U-value')
-plt.legend(loc=1)
-plt.title('FeedForward Neural Network - KSM')
-plt.show()
-plt.plot(df['KjolevannU'][samples:], color='blue', label='U Value')
-plt.plot(df['pred'][samples:], 'g-', label='Predicted', alpha=0.7)
-plt.xlabel('Time')
-plt.ylabel('U-value')
-plt.legend(loc=1)
-plt.title('Predicted values for KSM')
-plt.show()
-
-print("My program took", time.time() - start_time, "seconds to run")
-
-# This code can also plot the graphs, but not with the time series index
-'''
-fig = plt.subplots()
-plt.plot(np.linspace(1, len(y_train), len(y_train)), y_train, 'b')
-plt.plot(np.linspace(1, len(pred_train), len(pred_train)), pred_train, 'g')
-plt.title('Training vs. measured')
-fig = plt.subplots()
-plt.plot(np.linspace(1, len(y_test), len(y_test)), y_test, 'b')
-plt.plot(np.linspace(1, len(pred_test), len(pred_test)), pred_test, 'g')
-plt.title('Test vs. measured') 
-plt.show()
-'''
+model.save('my_model.h5')
+tfjs_target_dir = "C:\\Users\\herma\\Documents\\datadrevet_ML"
+tfjs.converters.save_keras_model(model, tfjs_target_dir)
