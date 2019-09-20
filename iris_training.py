@@ -11,6 +11,8 @@ import tensorflow as tf
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
+
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 start_time = time.time()
 
 tf.compat.v1.disable_eager_execution()
