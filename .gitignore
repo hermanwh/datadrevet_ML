@@ -36,3 +36,8 @@
 
 # models
 /tfjs_models/*
+
+# files
+testingstuff.py
+
+/__pycache__/*
