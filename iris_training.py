@@ -12,6 +12,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import generate_iris_data
 import time
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+tf.compat.v1.disable_eager_execution()
 
 EPOCHS = 100
 BATCH_SIZE = 10
@@ -25,6 +27,13 @@ OPTIMIZER = 'adam'
 METRICS = ['mean_squared_error']
 
 MODEL_FOLDER = 'tfjs_models'
+
+def getSequentialModel(INPUT_DIM):
+    model = Sequential()
+    model.add(Dense(10, input_dim=INPUT_DIM, activation=ACTIVATION))
+    model.add(Dense(5, activation=ACTIVATION))
+    model.add(Dense(1, activation=ACTIVATION))
+    return model
 
 def train(df):
     print('Training on the following data:')
@@ -50,11 +59,7 @@ def train(df):
                                                                 shuffle=SHUFFLE
                                                                 )
 
-            model = Sequential()
-            model.add(Dense(10, input_dim=X_train.shape[1], activation=ACTIVATION))
-            model.add(Dense(5, activation=ACTIVATION))
-            model.add(Dense(1, activation=ACTIVATION))
-
+            model = getSequentialModel(X_train.shape[1])
             model.compile(loss=LOSS, optimizer=OPTIMIZER, metrics=METRICS)
             model.fit(X_train,
                         y_train,
@@ -104,9 +109,6 @@ def plotScatter(column, X_train, X_test, y_train, y_test, pred_test):
         plt.show()
 
 def main():
-    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-    tf.compat.v1.disable_eager_execution()
-
     df_iris = pd.read_csv('iris.csv').drop('variety', 1)
 
     generatedData = generate_iris_data.generateAdditionalData(100, 2)
@@ -119,5 +121,6 @@ def main():
         print(f'All models were saved successfully in folder {MODEL_FOLDER}')
     else:
         print(f'Saving was unsuccessful')
+    print(f'Program completed')
 
 main()
