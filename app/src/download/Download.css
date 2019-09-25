@@ -22,3 +22,15 @@
 .container {
   width: 100%;
 }
+
+.red {
+  background: red;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.green {
+  background: green;
+  padding: 5px;
+  border-radius: 3px;
+}

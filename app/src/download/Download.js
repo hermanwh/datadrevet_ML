@@ -16,7 +16,8 @@ class DownloadFile extends React.Component {
       plot_bgcolor: "#fff"
     },
     frames: [],
-    config: {}
+    config: {},
+    currentValue: 0
   };
 
   getData = () => {
@@ -26,7 +27,11 @@ class DownloadFile extends React.Component {
   componentDidMount() {
     setInterval(() => {
       var k = this.state.data[0].y.slice();
-      k.push(Math.random());
+      let n = Math.random();
+      this.setState({
+        currentValue: n
+      });
+      k.push(n);
       k.slice(0, 1);
       console.log(k);
       this.setState({
@@ -75,7 +80,11 @@ class DownloadFile extends React.Component {
           </div>
         </div>
         {this.state.loadedProject && (
-          <div className="Card">
+          <div className="Card2">
+            <div className={this.state.currentValue < 0.5 ? "green" : "red"}>
+              Current value: <strong>{this.state.currentValue}</strong>
+            </div>
+
             <div className="plots">
               <div className="plot__wrapper">
                 <Plot
