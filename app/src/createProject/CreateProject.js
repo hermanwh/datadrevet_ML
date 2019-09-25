@@ -8,16 +8,9 @@ class CreateProject extends Component {
     return (
       <React.Fragment>
         <div className="Subheader">
-          Upload a tensorflow model (with weights) or use predefined model
+          Use predefined model or upload your own model at "new project"
         </div>
-        <div className="Container">
-          <div className="Card">
-            <DownloadFile />
-          </div>
-          <div className="Card">
-            <Upload />
-          </div>
-        </div>
+        <DownloadFile />
       </React.Fragment>
     );
   }

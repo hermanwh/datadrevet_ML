@@ -15,12 +15,13 @@ class App extends Component {
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             Datadriven machine learning
           </Link>
-          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          <Link to="/upload" style={{ textDecoration: "none", color: "white" }}>
             New project
           </Link>
         </div>
         <Switch>
           <Route exact path="/" component={CreateProject} />
+          <Route exact path="/upload" component={Upload} />
         </Switch>
       </BrowserRouter>
     );
