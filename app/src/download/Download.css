@@ -1,0 +1,24 @@
+.Title {
+  margin-bottom: 32px;
+  color: #555;
+}
+
+.ImageWrapper {
+  width: 200px;
+  height: auto;
+  margin: 40px 0;
+}
+
+.Image {
+  width: 180px;
+}
+
+.ButtonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.container {
+  width: 100%;
+}

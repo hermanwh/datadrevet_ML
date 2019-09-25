@@ -20,6 +20,7 @@ class LandingPage extends Component {
   }
 
   componentDidMount() {
+    /*
     setInterval(() => {
       var k = this.state.data[0].y.slice();
       k.push(Math.random());
@@ -33,6 +34,7 @@ class LandingPage extends Component {
         ]
       });
     }, 2000);
+    */
   }
 
   getData = () => {
@@ -42,8 +44,6 @@ class LandingPage extends Component {
   render() {
     return (
       <div className="app__wrapper">
-        <div className="header">DATADRIVEN PROJECT</div>
-        <div className="sub-header">by Herman Horn and Erik Kjernlie</div>
         <div className="plots">
           <div className="plot__wrapper">
             <Plot

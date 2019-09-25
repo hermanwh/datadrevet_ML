@@ -3,7 +3,9 @@ import "./App.css";
 import { Route, Link, BrowserRouter, Switch } from "react-router-dom";
 
 import Upload from "./upload/Upload";
+import Download from "./download/Download";
 import Landingpage from "./landingpage/Landingpage";
+import CreateProject from "./createProject/CreateProject";
 
 class App extends Component {
   render() {
@@ -13,19 +15,13 @@ class App extends Component {
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             Datadriven machine learning
           </Link>
-          <Link to="/upload" style={{ textDecoration: "none", color: "white" }}>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             New project
           </Link>
         </div>
-
-        <div className="App">
-          <div className="Card">
-            <Switch>
-              <Route exact path="/" component={Landingpage} />
-              <Route path="/upload" component={Upload} />
-            </Switch>
-          </div>
-        </div>
+        <Switch>
+          <Route exact path="/" component={CreateProject} />
+        </Switch>
       </BrowserRouter>
     );
   }
