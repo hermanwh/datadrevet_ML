@@ -50,4 +50,7 @@ def generateAdditionalData(size, spread):
                             'petal.length': hstack[:, 2], 
                             'petal.width': hstack[:, 3]})
 
+    plt.scatter(dataset.iloc[:, 0], dataset.iloc[:, 1], c='red')
+    plt.show()
+
     return dataset
