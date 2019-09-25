@@ -12,6 +12,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import time
 import sys
+import importlib
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 tf.compat.v1.disable_eager_execution()
 
@@ -35,11 +36,13 @@ def getSequentialModel(INPUT_DIM):
     model.add(Dense(1, activation=ACTIVATION))
     return model
 
-def train(df, column):
+def train(df, column, specification):
     print('Training on the following data:')
     print(df)
     print('-----------------')
-
+    
+    EPOCHS, BATCH_SIZE, TEST_SIZE, SHUFFLE, VERBOSE, ACTIVATION, LOSS, OPTIMIZER, METRICS = specification.getParams()
+    
     models = []
     columns = 1
     start_time = time.time()
@@ -58,7 +61,7 @@ def train(df, column):
                                                             shuffle=SHUFFLE
                                                             )
 
-        model = getSequentialModel(X_train.shape[1])
+        model = specification.getModel(X_train.shape[1])
         model.compile(loss=LOSS, optimizer=OPTIMIZER, metrics=METRICS)
         model.fit(X_train,
                     y_train,
@@ -93,9 +96,9 @@ def saveModels(models, folder, subfolder):
         tfjs.converters.save_keras_model(model, tfjs_target_dir)
     return True
 
-def main(filename, subfolder, column):
+def main(filename, subfolder, column, specification):
     df = pd.read_csv(filename)
-    models = train(df, column)
+    models = train(df, column, specification)
     saved = saveModels(models, MODEL_FOLDER, subfolder)
 
     if (saved):
@@ -104,9 +107,10 @@ def main(filename, subfolder, column):
         print(f'Saving was unsuccessful')
     print(f'Program completed')
 
-# call: python training_single.py iris_mod.csv testfolder sepal.width
+# usage: python training_single.py iris_mod.csv testfolder sepal.width specifications.basic
 if __name__ == "__main__":
     filename = sys.argv[1]
     subfolder = sys.argv[2]
     column = sys.argv[3]
-    main(filename, subfolder, column)
+    specification = importlib.import_module(sys.argv[4])
+    main(filename, subfolder, column, specification)

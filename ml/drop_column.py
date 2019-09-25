@@ -8,7 +8,7 @@ def main(file, column, target_file):
     df_iris.to_csv(target_file, index=False)
     print("Program completed")
 
-# call: python drop_column.py file column targetfile
+# usage: python drop_column.py file column targetfile
 if __name__ == "__main__":
     file = sys.argv[1]
     column = sys.argv[2]
