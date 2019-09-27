@@ -41,3 +41,5 @@
 testingstuff.py
 
 /__pycache__/*
+/ml/__pycache__/*
+/ml/specifications/__pycache__/*
