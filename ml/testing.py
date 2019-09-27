@@ -31,7 +31,7 @@ def main(modelname, testfile, target):
     plt.plot(time, pred, color='blue')
     plt.show()
 
-
+# usage: python testing.py rig.h5 ../datasets/rig_feil.csv Load
 if __name__ == "__main__":
     modelname = sys.argv[1]
     testfile = sys.argv[2]
