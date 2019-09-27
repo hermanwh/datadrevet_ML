@@ -3,8 +3,6 @@ import "./App.css";
 import { Route, Link, BrowserRouter, Switch } from "react-router-dom";
 
 import Upload from "./upload/Upload";
-import Download from "./download/Download";
-import Landingpage from "./landingpage/Landingpage";
 import CreateProject from "./createProject/CreateProject";
 
 class App extends Component {
