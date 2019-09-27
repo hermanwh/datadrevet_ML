@@ -25,6 +25,7 @@ class DownloadFile extends React.Component {
   };
 
   componentDidMount() {
+    /*
     setInterval(() => {
       var k = this.state.data[0].y.slice();
       let n = Math.random();
@@ -42,13 +43,14 @@ class DownloadFile extends React.Component {
         ]
       });
     }, 2000);
+    */
   }
 
   loadModel = async () => {
     try {
       const model = await tf.loadLayersModel("http://localhost:8000/model");
       console.log("Model loaded. ", model);
-      model.predict(tf.ones([null, 3]), [1]);
+      model.predict(tf.ones([1, 3]), [1]);
 
       return model;
     } catch (err) {
@@ -63,6 +65,16 @@ class DownloadFile extends React.Component {
   render() {
     return (
       <div className="Container">
+        <div className="Card">
+          <Plot
+            layout={this.state.layout}
+            frames={this.state.frames}
+            config={this.state.config}
+            onInitialized={figure => this.setState(figure)}
+            onUpdate={figure => this.setState(figure)}
+          />
+        </div>
+
         <div className="Card">
           <div className="container">
             <div className="Title">Predefined model</div>
