@@ -94,6 +94,7 @@ def saveModels(models, folder, subfolder):
         print(f'Saving column {column} in {folder}')
         tfjs_target_dir = "{}\\{}\\{}".format(folder, subfolder, column)
         tfjs.converters.save_keras_model(model, tfjs_target_dir)
+        model.save('rig.h5')
     return True
 
 def main(filename, subfolder, column, specification):
