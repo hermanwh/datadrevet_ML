@@ -27,6 +27,8 @@ def main(modelname, testfile, target):
 
     time = range(df.shape[0])
 
+    print(df)
+
     plt.plot(time, y, color='red')
     plt.plot(time, pred, color='blue')
     plt.show()
