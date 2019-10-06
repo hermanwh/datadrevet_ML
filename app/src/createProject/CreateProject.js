@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./CreateProject.css";
-import Upload from "../upload/Upload";
 import DownloadFile from "../download/Download";
 
 class CreateProject extends Component {
