@@ -16,11 +16,11 @@ standardScaler = StandardScaler()
 # fit_transform transforms the input x to the standardized domain and fits the standardScaler
 x = standardScaler.fit_transform(x)
 # define the principal componenet analysis model. n_componenets = dataset_size ==> 100% accuracy, obviously
-pca = decomposition.PCA(n_components=3)
+pca = decomposition.PCA(n_components=2)
 # train model
 pca.fit(x)
 # get the PCA transformation of the dataset, aka with n_componenets number of columns
-transformed = pca.fit_transform(x)
+transformed = pca.transform(x)
 # inverse the transformation, aka try to re-construct the original, post-standardized data
 inv_transformed = pca.inverse_transform(transformed)
 # inverse the standardization, aka try to re-construct the original, pre-standardized data 

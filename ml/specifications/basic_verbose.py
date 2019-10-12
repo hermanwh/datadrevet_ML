@@ -1,8 +1,8 @@
 from keras.models import Sequential
 from keras.layers import Dense
 
-EPOCHS = 40
-BATCH_SIZE = 10
+EPOCHS = 100
+BATCH_SIZE = 16
 TEST_SIZE = 0.2
 SHUFFLE = True
 VERBOSE = 1
