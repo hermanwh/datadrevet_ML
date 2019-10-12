@@ -115,3 +115,8 @@ if __name__ == "__main__":
     column = sys.argv[3]
     specification = importlib.import_module(sys.argv[4])
     main(filename, subfolder, column, specification)
+
+# TODO: rewrite with argparse to allow optional arguments
+# https://stackoverflow.com/questions/28479543/run-python-script-with-some-of-the-argument-that-are-optional
+
+# TODO: rewrite _single so that it is a specific case of _multiple
